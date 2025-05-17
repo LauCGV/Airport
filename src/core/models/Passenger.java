@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport;
+package core.models;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -32,10 +32,6 @@ public class Passenger {
         this.phone = phone;
         this.country = country;
         this.flights = new ArrayList<>();
-    }
-
-    public void addFlight(Flight flight) {
-        this.flights.add(flight);
     }
     
     public long getId() {
@@ -109,5 +105,10 @@ public class Passenger {
     public int getNumFlights() {
         return flights.size();
     }
+      
+    public void addFlight(Flight flight) {
+        this.flights.add(flight);
+    }
+    
     
 }
