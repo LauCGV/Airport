@@ -28,6 +28,7 @@ public class Plane {
         this.flights = new ArrayList<>();
     }
 
+    //Nueva clase para cumplir S
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }

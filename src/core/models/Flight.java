@@ -55,6 +55,7 @@ public class Flight {
         this.plane.addFlight(this);
     }
     
+    //Nueva clase, add
     public void addPassenger(Passenger passenger) {
         this.passengers.add(passenger);
     }
@@ -107,6 +108,7 @@ public class Flight {
         return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
     }
     
+    //Nueva clase
     public void delay(int hours, int minutes) {
         this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);
     }

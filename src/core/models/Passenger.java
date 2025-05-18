@@ -106,6 +106,8 @@ public class Passenger {
         return flights.size();
     }
       
+    
+    //En nueva clase
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }

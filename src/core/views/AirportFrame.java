@@ -34,6 +34,7 @@ public class AirportFrame extends javax.swing.JFrame {
     public AirportFrame() {
         initComponents();
 
+        //Atributos de las principales clases de los modelos
         this.passengers = new ArrayList<>();
         this.planes = new ArrayList<>();
         this.locations = new ArrayList<>();
@@ -51,13 +52,14 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void blockPanels() {
         //9, 11
-        for (int i = 1; i < jTabbedPane1.getTabCount(); i++) {
+        for (int i = 1; i < pantalla.getTabCount(); i++) {
             if (i != 9 && i != 11) {
-                jTabbedPane1.setEnabledAt(i, false);
+                pantalla.setEnabledAt(i, false);
             }
         }
     }
 
+    //Añadir los meses al
     private void generateMonths() {
         for (int i = 1; i < 13; i++) {
             monthComboBox.addItem("" + i);
@@ -101,10 +103,10 @@ public class AirportFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new core.models.PanelRound();
-        panelRound2 = new core.models.PanelRound();
+        panelRound1 = new core.views.PanelRound();
+        panelRound2 = new core.views.PanelRound();
         jButton13 = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pantalla = new javax.swing.JTabbedPane();
         Administration = new javax.swing.JPanel();
         userRB = new javax.swing.JRadioButton();
         administratorRB = new javax.swing.JRadioButton();
@@ -239,7 +241,7 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         minutesDelayCB = new javax.swing.JComboBox<>();
         btnDelayFlight = new javax.swing.JButton();
-        panelRound3 = new core.models.PanelRound();
+        panelRound3 = new core.views.PanelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -287,7 +289,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         panelRound1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
 
-        jTabbedPane1.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+        pantalla.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
 
         Administration.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -318,7 +320,7 @@ public class AirportFrame extends javax.swing.JFrame {
         });
         Administration.add(userSelectComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 130, -1));
 
-        jTabbedPane1.addTab("Administration", Administration);
+        pantalla.addTab("Administration", Administration);
 
         passangerRegistration.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -405,7 +407,7 @@ public class AirportFrame extends javax.swing.JFrame {
         });
         passangerRegistration.add(btnRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
 
-        jTabbedPane1.addTab("Passenger registration", passangerRegistration);
+        pantalla.addTab("Passenger registration", passangerRegistration);
 
         AirplaneRegistration.setLayout(null);
 
@@ -464,7 +466,7 @@ public class AirportFrame extends javax.swing.JFrame {
         AirplaneRegistration.add(btnCreateAirplane);
         btnCreateAirplane.setBounds(490, 480, 120, 40);
 
-        jTabbedPane1.addTab("Airplane registration", AirplaneRegistration);
+        pantalla.addTab("Airplane registration", AirplaneRegistration);
 
         idAirportLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         idAirportLabel.setText("Airport ID:");
@@ -566,7 +568,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(47, 47, 47))
         );
 
-        jTabbedPane1.addTab("Location registration", locationRegistration);
+        pantalla.addTab("Location registration", locationRegistration);
 
         idFlightLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         idFlightLabel.setText("ID:");
@@ -801,7 +803,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
         );
 
-        jTabbedPane1.addTab("Flight registration", flightRegistration);
+        pantalla.addTab("Flight registration", flightRegistration);
 
         jLabel36.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel36.setText("ID:");
@@ -942,7 +944,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(113, 113, 113))
         );
 
-        jTabbedPane1.addTab("Update info", updateInfo);
+        pantalla.addTab("Update info", updateInfo);
 
         idPassTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         idPassTextField.setEnabled(false);
@@ -1001,7 +1003,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(85, 85, 85))
         );
 
-        jTabbedPane1.addTab("Add to flight", addFlight);
+        pantalla.addTab("Add to flight", addFlight);
 
         flighsTable.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         flighsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -1063,7 +1065,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Show my flights", showMyFlights);
+        pantalla.addTab("Show my flights", showMyFlights);
 
         passengerTable.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         passengerTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -1123,7 +1125,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Show all passengers", showAllPassenger);
+        pantalla.addTab("Show all passengers", showAllPassenger);
 
         flightsTable.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         flightsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -1183,7 +1185,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Show all flights", showAllFlights);
+        pantalla.addTab("Show all flights", showAllFlights);
 
         btnRefreshPlanes.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         btnRefreshPlanes.setText("Refresh");
@@ -1242,7 +1244,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        jTabbedPane1.addTab("Show all planes", showAllPlanes);
+        pantalla.addTab("Show all planes", showAllPlanes);
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1301,7 +1303,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        jTabbedPane1.addTab("Show all locations", showAllLocations);
+        pantalla.addTab("Show all locations", showAllLocations);
 
         hourDelayCB.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         hourDelayCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hour" }));
@@ -1374,9 +1376,9 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGap(33, 33, 33))
         );
 
-        jTabbedPane1.addTab("Delay flight", delayFlight);
+        pantalla.addTab("Delay flight", delayFlight);
 
-        panelRound1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 41, 1150, 620));
+        panelRound1.add(pantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 41, 1150, 620));
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
@@ -1421,27 +1423,27 @@ public class AirportFrame extends javax.swing.JFrame {
             userSelectComboBox.setSelectedIndex(0);
 
         }
-        for (int i = 1; i < jTabbedPane1.getTabCount(); i++) {
-                jTabbedPane1.setEnabledAt(i, true);
+        for (int i = 1; i < pantalla.getTabCount(); i++) {
+                pantalla.setEnabledAt(i, true);
         }
-        jTabbedPane1.setEnabledAt(5, false);
-        jTabbedPane1.setEnabledAt(6, false);
+        pantalla.setEnabledAt(5, false);
+        pantalla.setEnabledAt(6, false);
     }//GEN-LAST:event_administratorRBActionPerformed
 
     private void userRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRBActionPerformed
         if (administratorRB.isSelected()) {
             administratorRB.setSelected(false);
         }
-        for (int i = 1; i < jTabbedPane1.getTabCount(); i++) {
+        for (int i = 1; i < pantalla.getTabCount(); i++) {
 
-            jTabbedPane1.setEnabledAt(i, false);
+            pantalla.setEnabledAt(i, false);
 
         }
-        jTabbedPane1.setEnabledAt(9, true);
-        jTabbedPane1.setEnabledAt(5, true);
-        jTabbedPane1.setEnabledAt(6, true);
-        jTabbedPane1.setEnabledAt(7, true);
-        jTabbedPane1.setEnabledAt(11, true);
+        pantalla.setEnabledAt(9, true);
+        pantalla.setEnabledAt(5, true);
+        pantalla.setEnabledAt(6, true);
+        pantalla.setEnabledAt(7, true);
+        pantalla.setEnabledAt(11, true);
     }//GEN-LAST:event_userRBActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
@@ -1792,7 +1794,6 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable5;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JTextField lastNameTextFiel;
@@ -1809,9 +1810,10 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JTextField nameUpdateTextField;
-    private core.models.PanelRound panelRound1;
-    private core.models.PanelRound panelRound2;
-    private core.models.PanelRound panelRound3;
+    private core.views.PanelRound panelRound1;
+    private core.views.PanelRound panelRound2;
+    private core.views.PanelRound panelRound3;
+    private javax.swing.JTabbedPane pantalla;
     private javax.swing.JPanel passangerRegistration;
     private javax.swing.JTable passengerTable;
     private javax.swing.JLabel phoneLabel;
