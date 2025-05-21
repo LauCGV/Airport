@@ -59,7 +59,7 @@ public class AirportFrame extends javax.swing.JFrame {
         }
     }
 
-    //Añadir los meses al
+    //Añadir los números de los meses, días, horas y al combox 
     private void generateMonths() {
         for (int i = 1; i < 13; i++) {
             monthComboBox.addItem("" + i);
