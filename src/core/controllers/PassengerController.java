@@ -4,7 +4,7 @@
  */
 package core.controllers;
 
-import core.controllers.utils.Ordenamiento;
+import core.controllers.utils.PassengerSort;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Passenger;
@@ -23,7 +23,7 @@ public class PassengerController {
         PassengerStorage passengerRegister = PassengerStorage.getInstance();
         ArrayList<Passenger> passengers = passengerRegister.getPassengers();
         try {
-            int  yearInt, monthInt, codeInt;
+            int yearInt, monthInt, codeInt;
             long phoneLong, idLong;
             boolean genderB;
             LocalDate birthday;
@@ -59,7 +59,7 @@ public class PassengerController {
 
             try {
                 yearInt = Integer.parseInt(year);
-                if (yearInt < 2000) {
+                if (yearInt < 1900) {
                     return new Response("Year must be greater than 2000", Status.BAD_REQUEST);
                 }
             } catch (NumberFormatException ex) {
@@ -97,15 +97,15 @@ public class PassengerController {
             } catch (NumberFormatException ex) {
                 return new Response("Phone must be numeric", Status.BAD_REQUEST);
             }
-            
+
             if (country.equals("")) {
                 return new Response("Country must be not empty", Status.BAD_REQUEST);
             }
             Passenger passengerTemp = new Passenger(idLong, firstname, lastname, birthday, codeInt, phoneLong, country);
-            passengers.add(passengerTemp); 
-            
+            passengers.add(passengerTemp);
+
             return new Response("Person created successfully", Status.CREATED);
-            
+
         } catch (Exception ex) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }

@@ -26,7 +26,7 @@ public class PlaneStorage extends Storage{
         return instance;
     }
 
-    public ArrayList<Plane> getPassengers() {
+    public ArrayList<Plane> getPlanes() {
         return this.planes;
     }
     
