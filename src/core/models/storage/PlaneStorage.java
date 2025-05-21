@@ -4,23 +4,35 @@
  */
 package core.models.storage;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import core.models.Plane;
 import java.util.ArrayList;
 
 /**
  *
  * @author Laura
  */
-public class PlaneStorage implements Storage{
-
-    @Override
-    public void add(ArrayList<Object> objects) {
-        
+public class PlaneStorage extends Storage{
+   private static PlaneStorage instance;
+    private ArrayList<Plane> planes;
+    
+    private PlaneStorage(){
+        this.planes = new ArrayList();
     }
 
+    public static PlaneStorage getInstance() {
+        if(instance == null){
+            instance = new PlaneStorage();
+        }
+        return instance;
+    }
+
+    public ArrayList<Plane> getPassengers() {
+        return this.planes;
+    }
+    
+    @Override
+    public void addObject(Object plane) {
+        this.planes.add((Plane) plane);       
+    }
+ 
 }

@@ -9,10 +9,15 @@ import core.models.Flight;
 import core.models.Passenger;
 import core.models.Location;
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.controllers.PassengerController;
+import core.controllers.utils.Ordenamiento;
+import core.controllers.utils.Response;
+import core.models.storage.PassengerStorage;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,20 +31,13 @@ public class AirportFrame extends javax.swing.JFrame {
      * Creates new form AirportFrame
      */
     private int x, y;
-    private ArrayList<Passenger> passengers;
-    private ArrayList<Plane> planes;
-    private ArrayList<Location> locations;
-    private ArrayList<Flight> flights;
+    private PassengerStorage passengerStorage;
 
     public AirportFrame() {
         initComponents();
 
-        //Atributos de las principales clases de los modelos
-        this.passengers = new ArrayList<>();
-        this.planes = new ArrayList<>();
-        this.locations = new ArrayList<>();
-        this.flights = new ArrayList<>();
-
+        this.passengerStorage = PassengerStorage.getInstance();
+        
         this.setBackground(new Color(0, 0, 0, 0));
         this.setLocationRelativeTo(null);
 
@@ -50,6 +48,7 @@ public class AirportFrame extends javax.swing.JFrame {
         this.blockPanels();
     }
 
+  
     private void blockPanels() {
         //9, 11
         for (int i = 1; i < pantalla.getTabCount(); i++) {
@@ -125,7 +124,7 @@ public class AirportFrame extends javax.swing.JFrame {
         phoneTextField = new javax.swing.JTextField();
         phoneLabel = new javax.swing.JLabel();
         monthLabel = new javax.swing.JLabel();
-        lastNameTextFiel = new javax.swing.JTextField();
+        lastNameTextField = new javax.swing.JTextField();
         cellphoneLabel = new javax.swing.JLabel();
         monthComboBox = new javax.swing.JComboBox<>();
         nameTextField = new javax.swing.JTextField();
@@ -376,8 +375,13 @@ public class AirportFrame extends javax.swing.JFrame {
         monthLabel.setText("-");
         passangerRegistration.add(monthLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 30, -1));
 
-        lastNameTextFiel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        passangerRegistration.add(lastNameTextFiel, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 130, -1));
+        lastNameTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        lastNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastNameTextFieldActionPerformed(evt);
+            }
+        });
+        passangerRegistration.add(lastNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 130, -1));
 
         cellphoneLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         cellphoneLabel.setText("-");
@@ -563,7 +567,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(locationRegistrationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(airportLongitudeLabel)
                     .addComponent(airportLongitudeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(btn_createAirport, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47))
         );
@@ -798,7 +802,7 @@ public class AirportFrame extends javax.swing.JFrame {
                                 .addComponent(scLocationLabel)
                                 .addComponent(scLocationCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(scDurationFlightLabel)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                 .addComponent(btn_createFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -905,7 +909,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(updateInfoLayout.createSequentialGroup()
                         .addGap(507, 507, 507)
                         .addComponent(btnUpdate)))
-                .addContainerGap(547, Short.MAX_VALUE))
+                .addContainerGap(613, Short.MAX_VALUE))
         );
         updateInfoLayout.setVerticalGroup(
             updateInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -979,7 +983,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(addFlightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(idFlightCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(idPassTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(829, Short.MAX_VALUE))
+                .addContainerGap(895, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addFlightLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAddFligh, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -998,7 +1002,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(addFlightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel45)
                     .addComponent(idFlightCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 293, Short.MAX_VALUE)
                 .addComponent(btnAddFligh, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
         );
@@ -1049,7 +1053,7 @@ public class AirportFrame extends javax.swing.JFrame {
             .addGroup(showMyFlightsLayout.createSequentialGroup()
                 .addGap(269, 269, 269)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addContainerGap(357, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showMyFlightsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnRefrescarMyFlights)
@@ -1060,7 +1064,7 @@ public class AirportFrame extends javax.swing.JFrame {
             .addGroup(showMyFlightsLayout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(btnRefrescarMyFlights)
                 .addContainerGap())
         );
@@ -1113,12 +1117,12 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(showAllPassengerLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         showAllPassengerLayout.setVerticalGroup(
             showAllPassengerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showAllPassengerLayout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(74, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRefreshPassengers)
@@ -1173,7 +1177,7 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(showAllFlightsLayout.createSequentialGroup()
                         .addGap(521, 521, 521)
                         .addComponent(btnRefreshFlights)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         showAllFlightsLayout.setVerticalGroup(
             showAllFlightsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1232,12 +1236,12 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(showAllPlanesLayout.createSequentialGroup()
                         .addGap(145, 145, 145)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         showAllPlanesLayout.setVerticalGroup(
             showAllPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showAllPlanesLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
                 .addComponent(btnRefreshPlanes)
@@ -1291,12 +1295,12 @@ public class AirportFrame extends javax.swing.JFrame {
                     .addGroup(showAllLocationsLayout.createSequentialGroup()
                         .addGap(226, 226, 226)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
         showAllLocationsLayout.setVerticalGroup(
             showAllLocationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, showAllLocationsLayout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(btnRefreshLocations)
@@ -1348,7 +1352,7 @@ public class AirportFrame extends javax.swing.JFrame {
                             .addComponent(jLabel46))
                         .addGap(79, 79, 79)
                         .addGroup(delayFlightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hourDelayCB, 0, 105, Short.MAX_VALUE)
+                            .addComponent(hourDelayCB, 0, 171, Short.MAX_VALUE)
                             .addComponent(idFlightDelayCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(820, 820, 820))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, delayFlightLayout.createSequentialGroup()
@@ -1371,7 +1375,7 @@ public class AirportFrame extends javax.swing.JFrame {
                 .addGroup(delayFlightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel48)
                     .addComponent(minutesDelayCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
                 .addComponent(btnDelayFlight)
                 .addGap(33, 33, 33))
         );
@@ -1448,20 +1452,41 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
         // TODO add your handling code here:
-        long id = Long.parseLong(idUserTextField.getText());
+        String id = idUserTextField.getText();
         String firstname = nameTextField.getText();
-        String lastname = lastNameTextFiel.getText();
-        int year = Integer.parseInt(yearTextField.getText());
-        int month = Integer.parseInt(monthComboBox.getItemAt(monthComboBox.getSelectedIndex()));
-        int day = Integer.parseInt(dayComboBox.getItemAt(dayComboBox.getSelectedIndex()));
-        int phoneCode = Integer.parseInt(idCellTextField.getText());
-        long phone = Long.parseLong(phoneTextField.getText());
+        String lastname = lastNameTextField.getText();
+        String year = yearTextField.getText();
+        String month = monthComboBox.getItemAt(monthComboBox.getSelectedIndex());
+        String day = dayComboBox.getItemAt(dayComboBox.getSelectedIndex());
+        String phoneCode = idCellTextField.getText();
+        String phone = phoneTextField.getText();
         String country = countryTextField.getText();
 
-        LocalDate birthDate = LocalDate.of(year, month, day);
+        Response response = PassengerController.passengerRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
 
-        this.passengers.add(new Passenger(id, firstname, lastname, birthDate, phoneCode, phone, country));
-        this.userSelectComboBox.addItem("" + id);
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
+            idUserTextField.setText("");
+            nameTextField.setText("");
+            lastNameTextField.setText("");
+            yearTextField.setText("");
+            monthComboBox.setSelectedIndex(0);
+            dayComboBox.setSelectedIndex(0);
+            idCellTextField.setText("");
+            phoneTextField.setText("");
+            countryTextField.setText(""); 
+            this.userSelectComboBox.removeAllItems();
+            ArrayList<Passenger> passengers = Ordenamiento.passengers(this.passengerStorage.getPassengers());
+            this.userSelectComboBox.addItem("Select User");
+            for(Passenger passenger: passengers){
+                this.userSelectComboBox.addItem(""+passenger.getId());
+                System.out.println("New: "+passenger.getId());
+            }
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnCreateAirplaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateAirplaneActionPerformed
@@ -1472,7 +1497,7 @@ public class AirportFrame extends javax.swing.JFrame {
         int maxCapacity = Integer.parseInt(maxCapAirplaneTextField.getText());
         String airline = airlineAirplaneTextField.getText();
 
-        this.planes.add(new Plane(id, brand, model, maxCapacity, airline));
+        //this.planes.add(new Plane(id, brand, model, maxCapacity, airline));
 
         this.jComboBox1.addItem(id);
     }//GEN-LAST:event_btnCreateAirplaneActionPerformed
@@ -1486,7 +1511,7 @@ public class AirportFrame extends javax.swing.JFrame {
         double latitude = Double.parseDouble(airportLatitudTextField.getText());
         double longitude = Double.parseDouble(airportLongitudeTextField.getText());
 
-        this.locations.add(new Location(id, name, city, country, latitude, longitude));
+        //this.locations.add(new Location(id, name, city, country, latitude, longitude));
 
         this.depLocationCB.addItem(id);
         this.arrivLocationCB.addItem(id);
@@ -1512,7 +1537,7 @@ public class AirportFrame extends javax.swing.JFrame {
 
         LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minutes);
 
-        Plane plane = null;
+     /*   Plane plane = null;
         for (Plane p : this.planes) {
             if (planeId.equals(p.getId())) {
                 plane = p;
@@ -1540,7 +1565,7 @@ public class AirportFrame extends javax.swing.JFrame {
             this.flights.add(new Flight(id, plane, departure, scale, arrival, departureDate, hoursDurationsArrival, minutesDurationsArrival, hoursDurationsScale, minutesDurationsScale));
         }
 
-        this.idFlightCB.addItem(id);
+        this.idFlightCB.addItem(id);*/
     }//GEN-LAST:event_btn_createFlightActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -1694,6 +1719,10 @@ public class AirportFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_depLocationCBActionPerformed
 
+    private void lastNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastNameTextFieldActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Administration;
@@ -1796,7 +1825,7 @@ public class AirportFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable5;
     private javax.swing.JLabel lastNameLabel;
-    private javax.swing.JTextField lastNameTextFiel;
+    private javax.swing.JTextField lastNameTextField;
     private javax.swing.JTextField lastNameUpdateTextField;
     private javax.swing.JPanel locationRegistration;
     private javax.swing.JTextField maxCapAirplaneTextField;

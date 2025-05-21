@@ -4,23 +4,35 @@
  */
 package core.models.storage;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import core.models.Location;
 import java.util.ArrayList;
 
 /**
  *
  * @author Laura
  */
-public class LocationStorage implements Storage{
+public class LocationStorage extends Storage{
+    private static LocationStorage instance;
+    private ArrayList<Location> locations;
+    
+    private LocationStorage(){
+        this.locations = new ArrayList();
+    }
 
-    @Override
-    public void add(ArrayList<Object> objects) {
-        
+    public static LocationStorage getInstance() {
+        if(instance == null){
+            instance = new LocationStorage();
+        }
+        return instance;
+    }
+
+    public ArrayList<Location> getPassengers() {
+        return this.locations;
     }
     
+    @Override
+    public void addObject(Object location) {
+        this.locations.add((Location) location);       
+    }
+
 }

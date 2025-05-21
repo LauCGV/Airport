@@ -111,6 +111,11 @@ public class Passenger {
     public void addFlight(Flight flight) {
         this.flights.add(flight);
     }
+
+    @Override
+    public String toString() {
+        return "Passenger{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", birthDate=" + birthDate + ", countryPhoneCode=" + countryPhoneCode + ", phone=" + phone + ", country=" + country + ", flights=" + flights + '}';
+    }
     
     
 }
