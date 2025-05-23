@@ -4,8 +4,7 @@
  */
 package core.controllers.utils;
 
-
-import core.models.Plane;
+import core.models.Flight;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,11 +13,11 @@ import java.util.Comparator;
  *
  * @author Laura
  */
-public class PlaneSort {
-    private ArrayList<Plane> planes;
+public class FlightSort {
+    private ArrayList<Flight> flights;
     
-    public static ArrayList<Plane> planes(ArrayList<Plane> planes) {
-        Collections.sort(planes, Comparator.comparing(Plane::getId));
-       return planes;
+    public static ArrayList<Flight> flightsSort(ArrayList<Flight> flights) {
+        Collections.sort(flights, Comparator.comparing(Flight::getId));
+       return flights;
     }
 }

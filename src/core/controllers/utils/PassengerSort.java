@@ -19,7 +19,7 @@ public class PassengerSort {
 
     private ArrayList<Passenger> passengers;
     
-    public static ArrayList<Passenger> passengers(ArrayList<Passenger> passengers) {
+    public static ArrayList<Passenger> passengersSort(ArrayList<Passenger> passengers) {
         Collections.sort(passengers, Comparator.comparingLong(Passenger::getId));
        return passengers;
     }

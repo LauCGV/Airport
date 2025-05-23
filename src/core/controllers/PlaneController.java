@@ -20,7 +20,7 @@ public class PlaneController {
 
     public static Response planeRegistration(String id, String brand, String model, String maxCapacity, String airline) {
         PlaneStorage planeRegister = PlaneStorage.getInstance();
-        ArrayList<Plane> planes = planeRegister.getPassengers();
+        ArrayList<Plane> planes = planeRegister.getPlanes();
         try {
             Pattern idPattern = Pattern.compile("^[A-Z]{2}\\d{5}$");
             int maxCapInt;

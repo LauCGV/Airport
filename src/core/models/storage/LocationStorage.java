@@ -26,7 +26,7 @@ public class LocationStorage extends Storage{
         return instance;
     }
 
-    public ArrayList<Location> getPassengers() {
+    public ArrayList<Location> getLocations() {
         return this.locations;
     }
     

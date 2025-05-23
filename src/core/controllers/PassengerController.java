@@ -60,7 +60,7 @@ public class PassengerController {
             try {
                 yearInt = Integer.parseInt(year);
                 if (yearInt < 1900) {
-                    return new Response("Year must be greater than 2000", Status.BAD_REQUEST);
+                    return new Response("Year must be greater than 1900", Status.BAD_REQUEST);
                 }
             } catch (NumberFormatException ex) {
                 return new Response("Year must be numeric", Status.BAD_REQUEST);
