@@ -9,21 +9,23 @@ import core.models.Flight;
 import core.models.Passenger;
 import core.models.Location;
 import com.formdev.flatlaf.FlatDarkLaf;
+import core.controllers.AddFlightToPassengerController;
 import core.controllers.DelayFlightController;
 import core.controllers.FlightController;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
 import core.controllers.PlaneController;
 import core.controllers.UpdatePassengerController;
-import core.controllers.utils.addJson.AddPassengerJson;
-import static core.controllers.utils.addJson.AddPassengerJson.addToComboBox;
+import core.controllers.utils.addItemToComboBox.AddPassengerToComboBox;
 import core.controllers.utils.LocationSort;
 import core.controllers.utils.PassengerSort;
 import core.controllers.utils.PlaneSort;
 import core.controllers.utils.Response;
-import core.controllers.utils.addJson.AddFlightJson;
-import core.controllers.utils.addJson.AddLocationJson;
-import core.controllers.utils.addJson.AddPlaneJson;
+import core.controllers.utils.addItemToComboBox.AddFlightToComboBox;
+import core.controllers.utils.addItemToComboBox.AddJsonToStorage;
+import core.controllers.utils.addItemToComboBox.AddLocationToComboBox;
+import core.controllers.utils.addItemToComboBox.AddPlaneToComboBox;
+import core.models.jsonReader.ReadJsonFlight;
 import core.models.storage.FlightStorage;
 import core.models.storage.LocationStorage;
 import core.models.storage.PassengerStorage;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import static core.controllers.utils.addItemToComboBox.AddPassengerToComboBox.addItems;
+import core.models.flights.AddFlightToPassenger;
 
 /**
  *
@@ -61,6 +65,7 @@ public class AirportFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         this.uploadJSON();
+        this.uploadItemsToComboBox();
         this.generateMonths();
         this.generateDays();
         this.generateHours();
@@ -69,36 +74,17 @@ public class AirportFrame extends javax.swing.JFrame {
     }
 
     private void uploadJSON() {
+        AddJsonToStorage.addJson();
+    }
 
-        Response responsePassenger = AddPassengerJson.addToComboBox(this.userSelectComboBox);
-
-        if (responsePassenger.getStatus() >= 500) {
-            JOptionPane.showMessageDialog(null, responsePassenger.getMessage(), "Error " + responsePassenger.getStatus(), JOptionPane.ERROR_MESSAGE);
-        } else if (responsePassenger.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(null, responsePassenger.getMessage(), "Error " + responsePassenger.getStatus(), JOptionPane.WARNING_MESSAGE);
-        } 
-        
-        Response responseFlight = AddFlightJson.addToComboBox(this.idFlightCB);
-        if (responseFlight.getStatus() >= 500) {
-            JOptionPane.showMessageDialog(null, responseFlight.getMessage(), "Error " + responseFlight.getStatus(), JOptionPane.ERROR_MESSAGE);
-        } else if (responseFlight.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(null, responseFlight.getMessage(), "Error " + responseFlight.getStatus(), JOptionPane.WARNING_MESSAGE);
-        } 
-        
-        Response responseLocation = AddLocationJson.addToComboBox(this.depLocationCB, this.scLocationCB, this.arrivLocationCB);
-        if (responseLocation.getStatus() >= 500) {
-            JOptionPane.showMessageDialog(null, responseLocation.getMessage(), "Error " + responseLocation.getStatus(), JOptionPane.ERROR_MESSAGE);
-        } else if (responseLocation.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(null, responseLocation.getMessage(), "Error " + responseLocation.getStatus(), JOptionPane.WARNING_MESSAGE);
-        } 
-        
-        Response responsePlane = AddPlaneJson.addToComboBox(this.planeSelectComboBox);
-        if (responsePlane.getStatus() >= 500) {
-            JOptionPane.showMessageDialog(null, responsePlane.getMessage(), "Error " + responsePlane.getStatus(), JOptionPane.ERROR_MESSAGE);
-        } else if (responsePlane.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(null, responsePlane.getMessage(), "Error " + responsePlane.getStatus(), JOptionPane.WARNING_MESSAGE);
-        } 
-        
+    private void uploadItemsToComboBox() {
+        Response responsePassenger = AddPassengerToComboBox.addItems(this.userSelectComboBox);
+        Response responsePlane = AddPlaneToComboBox.addItems(this.planeSelectComboBox);
+        Response responseFlight = AddFlightToComboBox.addItems(this.idFlightCB);
+        Response responseFlight2 = AddFlightToComboBox.addItems(this.idFlightDelayCB);
+        Response responseLocation1 = AddLocationToComboBox.addItems(this.arrivLocationCB);
+        Response responseLocation2 = AddLocationToComboBox.addItems(this.depLocationCB);
+        Response responseLocation3 = AddLocationToComboBox.addItems(this.scLocationCB);
     }
 
     private void blockPanels() {
@@ -1661,8 +1647,8 @@ public class AirportFrame extends javax.swing.JFrame {
         String phone = phoneUpdateTextField.getText();
         String country = countryUpdateTextField.getText();
 
-        Response response = UpdatePassengerController.passengerUpdateRegistration(id,firstname, lastname, year, month, day, phoneCode, phone, country);
-       if (response.getStatus() >= 500) {
+        Response response = UpdatePassengerController.passengerUpdateRegistration(id, firstname, lastname, year, month, day, phoneCode, phone, country);
+        if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
@@ -1671,7 +1657,7 @@ public class AirportFrame extends javax.swing.JFrame {
             idUpdateTextField.setText("");
             nameUpdateTextField.setText("");
             lastNameUpdateTextField.setText("");
-           yearUpdateTextField.setText("");
+            yearUpdateTextField.setText("");
             monthUpdateCB.setSelectedIndex(0);
             dayUpdateCB.setSelectedIndex(0);
             codCellUpdateTextField.setText("");
@@ -1681,27 +1667,20 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddFlighActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFlighActionPerformed
-        // TODO add your handling code here:
-        long passengerId = Long.parseLong(idPassTextField.getText());
+
+        String passengerId = idPassTextField.getText();
         String flightId = idFlightCB.getItemAt(idFlightCB.getSelectedIndex());
 
-        Passenger passenger = null;
-        Flight flight = null;
-
-        /* for (Passenger p : this.passengersSort) {
-            if (p.getId() == passengerId) {
-                passenger = p;
-            }
+        Response response = AddFlightToPassengerController.addFlight(passengerId, flightId);
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
+            idPassTextField.setText("");
+            idFlightCB.setSelectedIndex(0);
         }
-
-        for (Flight f : this.flights) {
-            if (flightId.equals(f.getId())) {
-                flight = f;
-            }
-        }
-
-        passenger.addFlight(flight);
-        flight.addPassenger(passenger);*/
     }//GEN-LAST:event_btnAddFlighActionPerformed
 
     private void btnDelayFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelayFlightActionPerformed
@@ -1709,7 +1688,7 @@ public class AirportFrame extends javax.swing.JFrame {
         String flightId = idFlightDelayCB.getItemAt(idFlightDelayCB.getSelectedIndex());
         String hours = hourDelayCB.getItemAt(hourDelayCB.getSelectedIndex());
         String minutes = minutesDelayCB.getItemAt(minutesDelayCB.getSelectedIndex());
-        
+
         Response response = DelayFlightController.delayFlight(flightId, hours, minutes);
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);

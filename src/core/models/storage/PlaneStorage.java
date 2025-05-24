@@ -29,6 +29,10 @@ public class PlaneStorage extends Storage{
     public ArrayList<Plane> getPlanes() {
         return this.planes;
     }
+
+    public void setPlanes(ArrayList<Plane> planes) {
+        this.planes = planes;
+    }
     
     @Override
     public void addObject(Object plane) {

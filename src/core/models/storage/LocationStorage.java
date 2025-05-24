@@ -29,6 +29,11 @@ public class LocationStorage extends Storage{
     public ArrayList<Location> getLocations() {
         return this.locations;
     }
+
+    public void setLocations(ArrayList<Location> locations) {
+        this.locations = locations;
+    }
+    
     
     @Override
     public void addObject(Object location) {

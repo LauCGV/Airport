@@ -9,6 +9,7 @@ import core.controllers.utils.Status;
 import core.models.Flight;
 import core.models.Location;
 import core.models.Plane;
+import core.models.flights.AddFlightToPlane;
 import core.models.storage.FlightStorage;
 import core.models.storage.LocationStorage;
 import core.models.storage.PlaneStorage;
@@ -155,6 +156,9 @@ public class FlightController {
             }
 
             flights.add(flightTemp);
+            AddFlightToPlane.addFlight(plane, flightTemp);
+            flightTemp.getPlane().addFlight(flightTemp);
+           // System.out.println("Plane id"+plane.getId()+", flight id"+flightTemp.getId());
             return new Response("Flight created successfully", Status.CREATED);
 
         } catch (Exception ex) {

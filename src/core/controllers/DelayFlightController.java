@@ -23,9 +23,14 @@ public class DelayFlightController {
             ArrayList<Flight> flights = flightRegister.getFlights();
             Flight delayFlight = null;
 
+            System.out.println("Size: " + flights.size());
             int hourInt = 0, minuteInt = 0;
 
-            if (id.equals("ID")) {
+            if(flights==null){
+                return new Response ("There are not flights", Status.NO_CONTENT);
+            }
+            
+            if (id.equals("Flight")) {
                 return new Response("Choose an ID", Status.OK);
             }
 
@@ -35,7 +40,7 @@ public class DelayFlightController {
                     return new Response("Choose an hour", Status.OK);
                 }
             } catch (NumberFormatException ex) {
-
+                return new Response("Hour must be numeric", Status.BAD_REQUEST);
             }
 
             try {
@@ -44,14 +49,14 @@ public class DelayFlightController {
                     return new Response("Choose a minute", Status.OK);
                 }
             } catch (NumberFormatException ex) {
-
+                return new Response("Minute must be numeric", Status.BAD_REQUEST);
             }
-
-            for (Flight flight : flights) {
-                if (flight.getId().equals(id)) {
-                    delayFlight = flight;
+            
+                for (Flight flight : flights) {
+                    if (flight.getId().equals(id)) {
+                        delayFlight = flight;
+                    }
                 }
-            }
 
             DelayFlight.delay(delayFlight, hourInt, minuteInt);
 

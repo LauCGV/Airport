@@ -4,49 +4,50 @@ import core.models.Flight;
 import core.models.Location;
 import core.models.storage.PlaneStorage;
 import core.models.Plane;
+import core.models.storage.FlightStorage;
 import core.models.storage.LocationStorage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import org.json.JSONException;
 
 public class ReadJsonFlight implements JsonReader<Flight> {
 
     @Override
-    public ArrayList<Flight> read(String path) {
+    public ArrayList<Flight> read(String path) throws IOException, JSONException {
         ArrayList<Flight> flights = new ArrayList<>();
 
-        try (InputStream is = new FileInputStream(path)) {
-            JSONArray array = new JSONArray(new JSONTokener(is));
+        InputStream is = new FileInputStream(path);
+        JSONArray array = new JSONArray(new JSONTokener(is));
 
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject obj = array.getJSONObject(i);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.getJSONObject(i);
 
-                String id = obj.getString("id");
-                String planeId = obj.getString("plane");
-                String departureLocationId = obj.getString("departureLocation");
-                String arrivalLocationId = obj.getString("arrivalLocation");
-                String scaleLocationId = obj.optString("scaleLocation", null);
-                String departureStr = obj.getString("departureDate"); /* esta vaina toca hacerla porque hay un error en el parseo
-                en el json nos dan un string, acá leemos string
-               nos da esta vaina: "2025-06-01T14:30:00" en string*/
-                LocalDateTime departureDate = LocalDateTime.parse(departureStr); // como el constructor está en LocalDate, toca volver a parsear
-                int hoursArrival = obj.getInt("hoursDurationArrival");
-                int minutesArrival = obj.getInt("minutesDurationArrival");
-                int hoursScale = obj.getInt("hoursDurationScale");
-                int minutesScale = obj.getInt("minutesDurationScale");
-                Plane plane=null;
-                Location departureLocation = null;
-                Location arrivalLocation = null;
-                Location scaleLocation = null;
-                
-                     PlaneStorage storageP = PlaneStorage.getInstance();
-                     LocationStorage storageL = LocationStorage.getInstance();
+            String id = obj.getString("id");
+            String planeId = obj.getString("plane");
+            String departureLocationId = obj.getString("departureLocation");
+            String arrivalLocationId = obj.getString("arrivalLocation");
+            String scaleLocationId = obj.optString("scaleLocation", null);
+            String departureStr = obj.getString("departureDate");
+            LocalDateTime departureDate = LocalDateTime.parse(departureStr); // como el constructor está en LocalDate, toca volver a parsear
+            int hoursArrival = obj.getInt("hoursDurationArrival");
+            int minutesArrival = obj.getInt("minutesDurationArrival");
+            int hoursScale = obj.getInt("hoursDurationScale");
+            int minutesScale = obj.getInt("minutesDurationScale");
+            Plane plane = null;
+            Location departureLocation = null;
+            Location arrivalLocation = null;
+            Location scaleLocation = null;
+
+            PlaneStorage storageP = PlaneStorage.getInstance();
+            LocationStorage storageL = LocationStorage.getInstance();
             for (Plane p : storageP.getPlanes()) {
                 if (p.getId().equals(planeId)) {
                     plane = p;
@@ -54,46 +55,34 @@ public class ReadJsonFlight implements JsonReader<Flight> {
             }
             for (Location l : storageL.getLocations()) {
                 if (l.getAirportId().equals(departureLocationId)) {
-                     departureLocation = l;
+                    departureLocation = l;
                 }
             }
             for (Location l : storageL.getLocations()) {
                 if (l.getAirportId().equals(arrivalLocationId)) {
-                     arrivalLocation = l;
+                    arrivalLocation = l;
                 }
             }
             for (Location l : storageL.getLocations()) {
                 if (l.getAirportId().equals(scaleLocationId)) {
-                     scaleLocation = l;
+                    scaleLocation = l;
                 }
             }
+            Flight flight = new Flight(id, plane,
+                    departureLocation,
+                    arrivalLocation,
+                    scaleLocation,
+                    departureDate,
+                    hoursArrival,
+                    minutesArrival,
+                    hoursScale,
+                    minutesScale);
 
-                /*
-                instancia de planestorage
-                sacar lista
-                recorrerla
-                if coinciden ambos id 
-                */
-                // recorrer los planes con la instancia del storage y si el id coincide, guardas y agregas dicho plane
-
-                // Crear vuelo con datos básicos (joa el plane es de tipo plane, qle vaina mala :((()
-                Flight flight = new Flight(id,plane,
-                        departureLocation,
-                        arrivalLocation,
-                        scaleLocation,
-                        departureDate,
-                        hoursArrival,
-                        minutesArrival,
-                        hoursScale, 
-                        minutesScale);
-
-                flights.add(flight);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error leyendo flights.json: " + e.getMessage());
+            flights.add(flight);
         }
 
+        FlightStorage flightRegister = FlightStorage.getInstance();
+        flightRegister.setFlights(flights);
         return flights;
     }
 }

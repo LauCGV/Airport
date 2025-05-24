@@ -29,6 +29,11 @@ public class FlightStorage extends Storage {
     public ArrayList<Flight> getFlights() {
         return this.flights;
     }
+
+    public void setFlights(ArrayList<Flight> flights) {
+        this.flights = flights;
+    }
+    
     
    @Override
     public void addObject(Object flight) {
