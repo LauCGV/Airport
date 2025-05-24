@@ -1,4 +1,4 @@
-package core.models.JsonReaders;
+package core.models.jsonReader;
 
 import java.util.ArrayList;
 

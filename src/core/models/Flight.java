@@ -35,8 +35,10 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
+        this.minutesDurationScale = 0;
+        this.hoursDurationScale = 0;
         
-        this.plane.addFlight(this);
+      //  this.plane.addFlight(this);
     }
 
     public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
@@ -50,9 +52,9 @@ public class Flight {
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
         this.hoursDurationScale = hoursDurationScale;
-        this.minutesDurationScale = minutesDurationScale;
-        
-        this.plane.addFlight(this);
+        this.minutesDurationScale = minutesDurationScale;       
+     
+      //this.plane.addFlight(this);
     }
     
     //Nueva clase, add
@@ -103,18 +105,20 @@ public class Flight {
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
     }
-    
-    public LocalDateTime calculateArrivalDate() {
-        return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
+
+    public void setHoursDurationArrival(int hoursDurationArrival) {
+        this.hoursDurationArrival = hoursDurationArrival;
     }
-    
-    //Nueva clase
-    public void delay(int hours, int minutes) {
-        this.departureDate = this.departureDate.plusHours(hours).plusMinutes(minutes);
+
+    public void setMinutesDurationArrival(int minutesDurationArrival) {
+        this.minutesDurationArrival = minutesDurationArrival;
     }
-    
+          
     public int getNumPassengers() {
         return passengers.size();
     }
-    
+   
+    public LocalDateTime calculateArrivalDate() {
+        return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
+    }
 }

@@ -1,4 +1,4 @@
-package core.models.JsonReaders;
+package core.models.jsonReader;
 
 import core.models.Plane;
 import org.json.JSONArray;

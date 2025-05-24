@@ -1,5 +1,5 @@
 
-package core.models.JsonReaders;
+package core.models.jsonReader;
 
 import core.models.Location;
 import org.json.JSONArray;
