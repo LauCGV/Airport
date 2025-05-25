@@ -11,17 +11,13 @@ import core.models.storage.PassengerStorage;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Allison Ruiz
- */
 import java.util.Comparator;
 
-public class PassengerListController {
+public class PassengerTableController {
 
-    public static Response updatePassengerList(DefaultTableModel model) {
+    public static Response updatePassengerTable(DefaultTableModel model) {
         try {
-            model.setRowCount(0); // Limpiar el modelo
+            model.setRowCount(0); 
             PassengerStorage passengerStorage = PassengerStorage.getInstance();
             ArrayList<Passenger> passengers = passengerStorage.getPassengers();
 
@@ -29,7 +25,6 @@ public class PassengerListController {
                 return new Response("The list is empty.", Status.NO_CONTENT);
             }
 
-            // Ordenar por ID ascendente
             passengers.sort(Comparator.comparingLong(Passenger::getId));
 
             for (Passenger passenger : passengers) {
@@ -44,7 +39,7 @@ public class PassengerListController {
                 });
             }
 
-            return new Response("List updated successfully.", Status.OK);
+            return new Response("Data successfully added", Status.OK);
         } catch (Exception e) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }

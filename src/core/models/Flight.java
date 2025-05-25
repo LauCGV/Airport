@@ -35,10 +35,10 @@ public class Flight {
         this.departureDate = departureDate;
         this.hoursDurationArrival = hoursDurationArrival;
         this.minutesDurationArrival = minutesDurationArrival;
+        this.scaleLocation = null;
         this.minutesDurationScale = 0;
         this.hoursDurationScale = 0;
-        
-      //  this.plane.addFlight(this);
+
     }
 
     public Flight(String id, Plane plane, Location departureLocation, Location scaleLocation, Location arrivalLocation, LocalDateTime departureDate, int hoursDurationArrival, int minutesDurationArrival, int hoursDurationScale, int minutesDurationScale) {
@@ -53,14 +53,9 @@ public class Flight {
         this.minutesDurationArrival = minutesDurationArrival;
         this.hoursDurationScale = hoursDurationScale;
         this.minutesDurationScale = minutesDurationScale;       
-     
-      //this.plane.addFlight(this);
+
     }
-    
-    //Nueva clase, add
-    public void addPassenger(Passenger passenger) {
-        this.passengers.add(passenger);
-    }
+ 
     
     public String getId() {
         return id;
@@ -126,4 +121,11 @@ public class Flight {
     public LocalDateTime calculateArrivalDate() {
         return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
     }
+
+    @Override
+    public String toString() {
+        return "Flight{" + "id=" + id + ", scaleLocation=" + scaleLocation + '}';
+    }
+    
+    
 }

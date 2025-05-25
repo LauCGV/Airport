@@ -91,7 +91,6 @@ public class FlightController {
                 for (Location location : locations) {
                     if (location.getAirportId().equals(scaleLocation)) {
                         locationScale = location;
-                        System.out.println("Scale en condicional: " + locationScale);
                     }
                 }
             }

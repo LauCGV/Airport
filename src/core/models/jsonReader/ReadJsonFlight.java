@@ -28,59 +28,69 @@ public class ReadJsonFlight implements JsonReader<Flight> {
         JSONArray array = new JSONArray(new JSONTokener(is));
 
         for (int i = 0; i < array.length(); i++) {
-            JSONObject obj = array.getJSONObject(i);
+            JSONObject object = array.getJSONObject(i);
 
-            String id = obj.getString("id");
-            String planeId = obj.getString("plane");
-            String departureLocationId = obj.getString("departureLocation");
-            String arrivalLocationId = obj.getString("arrivalLocation");
-            String scaleLocationId = obj.optString("scaleLocation", null);
-            String departureStr = obj.getString("departureDate");
+            String id = object.getString("id");
+            String planeId = object.getString("plane");
+            String departureLocationId = object.getString("departureLocation");
+            String arrivalLocationId = object.getString("arrivalLocation");
+            String scaleLocationId = object.optString("scaleLocation", null);
+            String departureStr = object.getString("departureDate");
             LocalDateTime departureDate = LocalDateTime.parse(departureStr); // como el constructor está en LocalDate, toca volver a parsear
-            int hoursArrival = obj.getInt("hoursDurationArrival");
-            int minutesArrival = obj.getInt("minutesDurationArrival");
-            int hoursScale = obj.getInt("hoursDurationScale");
-            int minutesScale = obj.getInt("minutesDurationScale");
+            int hoursArrival = object.getInt("hoursDurationArrival");
+            int minutesArrival = object.getInt("minutesDurationArrival");
+            int hoursScale = object.getInt("hoursDurationScale");
+            int minutesScale = object.getInt("minutesDurationScale");
             Plane plane = null;
             Location departureLocation = null;
             Location arrivalLocation = null;
             Location scaleLocation = null;
+            Flight flight;
 
             PlaneStorage storageP = PlaneStorage.getInstance();
             LocationStorage storageL = LocationStorage.getInstance();
-            for (Plane p : storageP.getPlanes()) {
-                if (p.getId().equals(planeId)) {
-                    plane = p;
+            for (Plane planeTemp : storageP.getPlanes()) {
+                if (planeTemp.getId().equals(planeId)) {
+                    plane = planeTemp;
                 }
             }
-            for (Location l : storageL.getLocations()) {
-                if (l.getAirportId().equals(departureLocationId)) {
-                    departureLocation = l;
+            for (Location locationTemp : storageL.getLocations()) {
+                if (locationTemp.getAirportId().equals(departureLocationId)) {
+                    departureLocation = locationTemp;
                 }
             }
-            for (Location l : storageL.getLocations()) {
-                if (l.getAirportId().equals(arrivalLocationId)) {
-                    arrivalLocation = l;
+            for (Location locationTemp : storageL.getLocations()) {
+                if (locationTemp.getAirportId().equals(arrivalLocationId)) {
+                    arrivalLocation = locationTemp;
                 }
             }
-            for (Location l : storageL.getLocations()) {
-                if (l.getAirportId().equals(scaleLocationId)) {
-                    scaleLocation = l;
+            for (Location locationTemp : storageL.getLocations()) {
+                if (locationTemp.getAirportId().equals(scaleLocationId)) {
+                    scaleLocation = locationTemp;
                 }
             }
-            Flight flight = new Flight(id, plane,
-                    departureLocation,
-                    arrivalLocation,
-                    scaleLocation,
-                    departureDate,
-                    hoursArrival,
-                    minutesArrival,
-                    hoursScale,
-                    minutesScale);
+
+            if (scaleLocation == null) {
+                flight = new Flight(id, plane,
+                        departureLocation,
+                        arrivalLocation,
+                        departureDate,
+                        hoursArrival,
+                        minutesArrival);
+            } else {
+                flight = new Flight(id, plane,
+                        departureLocation,
+                        arrivalLocation,
+                        scaleLocation,
+                        departureDate,
+                        hoursArrival,
+                        minutesArrival,
+                        hoursScale,
+                        minutesScale);
+            }
 
             flights.add(flight);
         }
-
         FlightStorage flightRegister = FlightStorage.getInstance();
         flightRegister.setFlights(flights);
         return flights;

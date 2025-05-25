@@ -12,15 +12,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Allison Ruiz
- */
-public class LocationListController {
 
-    public static Response updateLocationList(DefaultTableModel model) {
+public class LocationTableController {
+
+    public static Response updateLocationTable(DefaultTableModel model) {
         try {
-            model.setRowCount(0); // Limpiar el modelo
+            model.setRowCount(0);
             LocationStorage locationStorage = LocationStorage.getInstance();
             ArrayList<Location> locations = locationStorage.getLocations();
 
@@ -28,7 +25,6 @@ public class LocationListController {
                 return new Response("The list is empty.", Status.NO_CONTENT);
             }
 
-            // Ordenar por ID ascendente
             locations.sort(Comparator.comparing(Location::getAirportId));
 
             for (Location location : locations) {
@@ -40,7 +36,7 @@ public class LocationListController {
                 });
             }
 
-            return new Response("List updated successfully.", Status.OK);
+            return new Response("Data successfully added", Status.OK);
         } catch (Exception e) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }
