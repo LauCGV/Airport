@@ -35,13 +35,15 @@ public class AddFlightToPassengerController {
             if (passengers.isEmpty()) {
                 return new Response("No passengers available", Status.BAD_REQUEST);
             }
-            
+
             if (flights.isEmpty()) {
                 return new Response("No flights available", Status.BAD_REQUEST);
             }
 
             for (Passenger passenger : passengers) {
-                passengerSelected = passenger;
+                if (passenger.getId() == idPassenger) {
+                    passengerSelected = passenger;
+                }
             }
 
             if (idFlight.equals("Flight")) {
@@ -52,17 +54,19 @@ public class AddFlightToPassengerController {
                 return new Response("No flights available", Status.BAD_REQUEST);
             }
 
-            for(Flight flight: flights){
-                flightSelected = flight;
+            for (Flight flight : flights) {
+                if (flight.getId().equals(idFlight)) {
+                    flightSelected = flight;
+                }
             }
-            
-            if(passengerSelected.getFlights().contains(flightSelected)){
-                return new Response ("This flight already exist on this passenger", Status.BAD_REQUEST);
+
+            if (passengerSelected.getFlights().contains(flightSelected)) {
+                return new Response("This flight already exist on this passenger", Status.BAD_REQUEST);
             }
-            
+
             flightSelected.getPassengers().add(passengerSelected);
             passengerSelected.getFlights().add(flightSelected);
-            
+
             return new Response("Flight added successfully", Status.OK);
         } catch (Exception ex) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
