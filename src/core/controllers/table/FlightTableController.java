@@ -22,7 +22,7 @@ public class FlightTableController {
             ArrayList<Flight> flights = flightStorage.getFlights();
 
             if (flights == null || flights.isEmpty()) {
-                return new Response("The list is empty.", Status.NO_CONTENT);
+                return new Response("The list is empty.", Status.NO_CONTENT, flights.clone());
             }
 
             flights.sort(Comparator.comparing(Flight::getDepartureDate));
@@ -50,7 +50,7 @@ public class FlightTableController {
                         flight.getNumPassengers(),});
                 }
             }
-            return new Response("Data successfully added", Status.OK);
+            return new Response("Data successfully added", Status.OK, flights.clone());
         } catch (Exception e) {
             System.out.println(e);
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);

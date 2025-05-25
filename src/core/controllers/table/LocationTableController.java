@@ -22,7 +22,7 @@ public class LocationTableController {
             ArrayList<Location> locations = locationStorage.getLocations();
 
             if (locations == null || locations.isEmpty()) {
-                return new Response("The list is empty.", Status.NO_CONTENT);
+                return new Response("The list is empty.", Status.NO_CONTENT, locations.clone());
             }
 
             locations.sort(Comparator.comparing(Location::getAirportId));
@@ -36,7 +36,7 @@ public class LocationTableController {
                 });
             }
 
-            return new Response("Data successfully added", Status.OK);
+            return new Response("Data successfully added", Status.OK, locations.clone());
         } catch (Exception e) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }

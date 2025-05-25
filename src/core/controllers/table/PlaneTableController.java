@@ -22,7 +22,7 @@ public class PlaneTableController {
             ArrayList<Plane> planes = planeStorage.getPlanes();
 
             if (planes == null || planes.isEmpty()) {
-                return new Response("The list is empty.", Status.NO_CONTENT);
+                return new Response("The list is empty.", Status.NO_CONTENT, planes.clone());
             }
 
             planes.sort(Comparator.comparing(Plane::getId));
@@ -38,7 +38,7 @@ public class PlaneTableController {
                 });
             }
 
-            return new Response("Data successfully added", Status.OK);
+            return new Response("Data successfully added", Status.OK, planes.clone());
         } catch (Exception e) {
             return new Response("Unexpected error", Status.INTERNAL_SERVER_ERROR);
         }
