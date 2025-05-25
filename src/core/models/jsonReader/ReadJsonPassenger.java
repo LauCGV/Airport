@@ -23,20 +23,20 @@ public class ReadJsonPassenger implements JsonReader<Passenger> {
         JSONArray array = new JSONArray(new JSONTokener(is));
 
         for (int i = 0; i < array.length(); i++) {
-            JSONObject obj = array.getJSONObject(i);
+            JSONObject object = array.getJSONObject(i);
 
-            String birthStr = obj.getString("birthDate");
-            LocalDate birthDate = LocalDate.parse(birthStr);
-            Passenger p = new Passenger(
-                    obj.getInt("id"),
-                    obj.getString("firstname"),
-                    obj.getString("lastname"),
+            String birthDateString = object.getString("birthDate");
+            LocalDate birthDate = LocalDate.parse(birthDateString);
+            Passenger passenger = new Passenger(
+                    object.getInt("id"),
+                    object.getString("firstname"),
+                    object.getString("lastname"),
                     birthDate,
-                    obj.getInt("countryPhoneCode"),
-                    obj.getInt("phone"),
-                    obj.getString("country")
+                    object.getInt("countryPhoneCode"),
+                    object.getInt("phone"),
+                    object.getString("country")
             );
-            passengers.add(p);
+            passengers.add(passenger);
         }
         PassengerStorage passengerRegister = PassengerStorage.getInstance();
         passengerRegister.setPassengers(passengers);

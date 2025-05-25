@@ -21,7 +21,6 @@ import core.controllers.table.LocationTableController;
 import core.controllers.table.PassengerTableController;
 import core.controllers.table.PlaneTableController;
 import core.controllers.utils.addItemToComboBox.AddPassengerToComboBox;
-import core.controllers.utils.LocationSort;
 import core.controllers.utils.PassengerSort;
 import core.controllers.utils.PlaneSort;
 import core.controllers.utils.Response;
@@ -1555,12 +1554,8 @@ public class AirportFrame extends javax.swing.JFrame {
             maxCapAirplaneTextField.setText("");
             airlineAirplaneTextField.setText("");
             this.planeSelectComboBox.removeAllItems();
-            ArrayList<Plane> planes = PlaneSort.planes(this.planeStorage.getPlanes());
-            this.planeSelectComboBox.addItem("Plane");
-            for (Plane plane : planes) {
-                this.planeSelectComboBox.addItem("" + plane.getId());
-                System.out.println("New: " + plane.getId());
-            }
+
+            AddPlaneToComboBox.addItems(this.planeSelectComboBox);
         }
     }//GEN-LAST:event_btnCreateAirplaneActionPerformed
 
@@ -1590,12 +1585,9 @@ public class AirportFrame extends javax.swing.JFrame {
             this.depLocationCB.removeAllItems();
             this.arrivLocationCB.removeAllItems();
             this.scLocationCB.removeAllItems();
-            ArrayList<Location> locations = LocationSort.locations(this.locationStorage.getLocations());
-            this.planeSelectComboBox.addItem("Plane");
-            for (Location location : locations) {
-                this.planeSelectComboBox.addItem("" + location.getAirportId());
-                System.out.println("New: " + location.getAirportId());
-            }
+            AddLocationToComboBox.addItems(this.depLocationCB);
+            AddLocationToComboBox.addItems(this.arrivLocationCB);
+            AddLocationToComboBox.addItems(this.scLocationCB);
         }
     }//GEN-LAST:event_btn_createAirportActionPerformed
 
@@ -1638,7 +1630,12 @@ public class AirportFrame extends javax.swing.JFrame {
             arDurMinuteFlightCB.setSelectedIndex(0);
             scDurHourFlightCB.setSelectedIndex(0);
             scDurMinuteFlightCB.setSelectedIndex(0);
+
+            AddFlightToComboBox.addItems(idFlightCB);
+            AddFlightToComboBox.addItems(idFlightDelayCB);
         }
+
+
     }//GEN-LAST:event_btn_createFlightActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed

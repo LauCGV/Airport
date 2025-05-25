@@ -22,14 +22,14 @@ public class ReadJsonPlane implements JsonReader<Plane> {
         JSONArray array = new JSONArray(new JSONTokener(is));
 
         for (int i = 0; i < array.length(); i++) {
-            JSONObject obj = array.getJSONObject(i);
+            JSONObject object = array.getJSONObject(i);
 
             Plane plane = new Plane(
-                    obj.getString("id"),
-                    obj.getString("brand"),
-                    obj.getString("model"),
-                    obj.getInt("maxCapacity"),
-                    obj.getString("airline")
+                    object.getString("id"),
+                    object.getString("brand"),
+                    object.getString("model"),
+                    object.getInt("maxCapacity"),
+                    object.getString("airline")
             );
             PlaneStorage planeRegister = PlaneStorage.getInstance();
             planeRegister.setPlanes(planes);

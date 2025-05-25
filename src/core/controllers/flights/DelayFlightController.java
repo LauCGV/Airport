@@ -28,7 +28,7 @@ public class DelayFlightController {
                 return new Response("There are not flights", Status.NO_CONTENT);
             }
 
-            if (id.equals("Flight")) {
+            if (id.equals("Flight")|| id.equals("ID")) {
                 return new Response("Choose an ID", Status.OK);
             }
 

@@ -21,18 +21,18 @@ public class ReadJsonLocation implements JsonReader<Location> {
         JSONArray array = new JSONArray(new JSONTokener(is));
 
         for (int i = 0; i < array.length(); i++) {
-            JSONObject obj = array.getJSONObject(i);
+            JSONObject object = array.getJSONObject(i);
 
-            Location loc = new Location(
-                    obj.getString("airportId"),
-                    obj.getString("airportName"),
-                    obj.getString("airportCity"),
-                    obj.getString("airportCountry"),
-                    obj.getDouble("airportLatitude"),
-                    obj.getDouble("airportLongitude")
+            Location location = new Location(
+                    object.getString("airportId"),
+                    object.getString("airportName"),
+                    object.getString("airportCity"),
+                    object.getString("airportCountry"),
+                    object.getDouble("airportLatitude"),
+                    object.getDouble("airportLongitude")
             );
 
-            locations.add(loc);
+            locations.add(location);
         }
         LocationStorage locationRegister = LocationStorage.getInstance();
         locationRegister.setLocations(locations);
