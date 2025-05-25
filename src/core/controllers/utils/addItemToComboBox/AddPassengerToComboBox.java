@@ -8,6 +8,7 @@ import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.jsonReader.ReadJsonPassenger;
 import core.models.Passenger;
+import core.models.storage.PassengerStorage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,10 +22,9 @@ public class AddPassengerToComboBox {
 
     public static Response addItems(JComboBox<String> comboBox) {
         try {
-            ReadJsonPassenger jsonPassenger = new ReadJsonPassenger();
-            ArrayList<Passenger> passengers = jsonPassenger.read("src\\json\\passengers.json");
+            PassengerStorage passengerRegister = PassengerStorage.getInstance();
+            ArrayList<Passenger> passengers = passengerRegister.getPassengers();
             comboBox.removeAllItems();
-            System.out.println("Size: " + passengers.size());
             Collections.sort(passengers, Comparator.comparingLong(Passenger::getId));
             comboBox.addItem("Select User");
             for (Passenger passenger : passengers) {

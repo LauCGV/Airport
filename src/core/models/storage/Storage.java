@@ -10,6 +10,6 @@ import java.util.ArrayList;
  *
  * @author Laura
  */
-public abstract class Storage{
+public interface Storage{
     public abstract void addObject(Object object);   
 }

@@ -22,8 +22,8 @@ public class LocationController {
         ArrayList<Location> locations = locationRegister.getLocations();
         try {
             Pattern idPattern = Pattern.compile("^[A-Z]{3}$");
-            Pattern latitudPattern = Pattern.compile("^\\d+(\\.\\d{1,4})?$");
-            Pattern longitudPattern = Pattern.compile("^\\d+(\\.\\d{1,4})?$");
+            Pattern latitudPattern = Pattern.compile("^\\d+(\\.\\d{0,4})?$");
+            Pattern longitudPattern = Pattern.compile("^\\d+(\\.\\d{0,4})?$");
             double latitudDouble, longitudDouble;
             
             if (!idPattern.matcher(id).matches()) {

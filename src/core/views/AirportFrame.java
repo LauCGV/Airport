@@ -9,9 +9,9 @@ import core.models.Flight;
 import core.models.Passenger;
 import core.models.Location;
 import com.formdev.flatlaf.FlatDarkLaf;
-import core.controllers.AddFlightToPassengerController;
-import core.controllers.DelayFlightController;
-import core.controllers.FlightController;
+import core.controllers.flights.AddFlightToPassengerController;
+import core.controllers.flights.DelayFlightController;
+import core.controllers.flights.FlightController;
 import core.controllers.LocationController;
 import core.controllers.PassengerController;
 import core.controllers.PlaneController;
@@ -36,7 +36,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import static core.controllers.utils.addItemToComboBox.AddPassengerToComboBox.addItems;
-import core.models.flights.AddFlightToPassenger;
 
 /**
  *
@@ -74,7 +73,14 @@ public class AirportFrame extends javax.swing.JFrame {
     }
 
     private void uploadJSON() {
-        AddJsonToStorage.addJson();
+        Response response = AddJsonToStorage.addJson();
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void uploadItemsToComboBox() {
@@ -85,6 +91,7 @@ public class AirportFrame extends javax.swing.JFrame {
         Response responseLocation1 = AddLocationToComboBox.addItems(this.arrivLocationCB);
         Response responseLocation2 = AddLocationToComboBox.addItems(this.depLocationCB);
         Response responseLocation3 = AddLocationToComboBox.addItems(this.scLocationCB);
+
     }
 
     private void blockPanels() {
@@ -1470,6 +1477,7 @@ public class AirportFrame extends javax.swing.JFrame {
         }
         pantalla.setEnabledAt(5, false);
         pantalla.setEnabledAt(6, false);
+        pantalla.setEnabledAt(7, false);
     }//GEN-LAST:event_administratorRBActionPerformed
 
     private void userRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userRBActionPerformed
@@ -1517,13 +1525,7 @@ public class AirportFrame extends javax.swing.JFrame {
             idCellTextField.setText("");
             phoneTextField.setText("");
             countryTextField.setText("");
-            this.userSelectComboBox.removeAllItems();
-            ArrayList<Passenger> passengers = PassengerSort.passengersSort(this.passengerStorage.getPassengers());
-            this.userSelectComboBox.addItem("Select User");
-            for (Passenger passenger : passengers) {
-                this.userSelectComboBox.addItem("" + passenger.getId());
-                System.out.println("New: " + passenger.getId());
-            }
+            AddPassengerToComboBox.addItems(this.userSelectComboBox);
 
         }
     }//GEN-LAST:event_btnRegisterActionPerformed

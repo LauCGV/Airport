@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Laura
  */
-public class LocationStorage extends Storage{
+public class LocationStorage implements Storage{
     private static LocationStorage instance;
     private ArrayList<Location> locations;
     

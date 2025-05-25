@@ -102,6 +102,11 @@ public class Flight {
         return plane;
     }
 
+    public ArrayList<Passenger> getPassengers() {
+        return passengers;
+    }
+    
+
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
     }

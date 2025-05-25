@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Laura
  */
-public class PlaneStorage extends Storage{
+public class PlaneStorage implements Storage{
    private static PlaneStorage instance;
     private ArrayList<Plane> planes;
     

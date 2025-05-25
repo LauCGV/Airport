@@ -8,6 +8,7 @@ import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Plane;
 import core.models.jsonReader.ReadJsonPlane;
+import core.models.storage.PlaneStorage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,8 +21,8 @@ import javax.swing.JComboBox;
 public class AddPlaneToComboBox {
    public static Response addItems(JComboBox<String> comboBox) {
         try {
-            ReadJsonPlane jsonPlanes = new ReadJsonPlane();
-            ArrayList<Plane> planes = jsonPlanes.read("src\\json\\planes.json");
+             PlaneStorage planeRegister = PlaneStorage.getInstance();
+            ArrayList<Plane> planes = planeRegister.getPlanes();
             comboBox.removeAllItems();
             Collections.sort(planes, Comparator.comparing(Plane::getId));
             comboBox.addItem("Plane");

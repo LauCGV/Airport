@@ -105,12 +105,6 @@ public class Passenger {
     public int getNumFlights() {
         return flights.size();
     }
-      
-    
-    //En nueva clase
-    public void addFlight(Flight flight) {
-        this.flights.add(flight);
-    }
 
     @Override
     public String toString() {

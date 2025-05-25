@@ -49,6 +49,24 @@ public class UpdatePassengerController {
                 return new Response("Lastname must be not empty", Status.BAD_REQUEST);
             }
 
+            if(year.equals("")){
+                return new Response("Year must be not empty", Status.BAD_REQUEST);
+            }
+            
+            if (month.equals("Month")) {
+                return new Response("Select a month", Status.BAD_REQUEST);
+            }
+
+            if (day.equals("Day")) {
+                return new Response("Select a day", Status.BAD_REQUEST);
+            }
+            if(code.equals("")){
+                 return new Response("Code must be not empty", Status.BAD_REQUEST);
+            }
+            
+            if(phone.equals("")){
+                 return new Response("Pohonenumber must be not empty", Status.BAD_REQUEST);
+            }
             try {
                 yearInt = Integer.parseInt(year);
                 if (yearInt < 1900) {
@@ -56,14 +74,6 @@ public class UpdatePassengerController {
                 }
             } catch (NumberFormatException ex) {
                 return new Response("Year must be numeric", Status.BAD_REQUEST);
-            }
-
-            if (month.equals("Month")) {
-                return new Response("Select a month", Status.BAD_REQUEST);
-            }
-
-            if (day.equals("Day")) {
-                return new Response("Select a day", Status.BAD_REQUEST);
             }
 
             try {
@@ -89,11 +99,11 @@ public class UpdatePassengerController {
             } catch (NumberFormatException ex) {
                 return new Response("Phone must be numeric", Status.BAD_REQUEST);
             }
-
+            
             if (country.equals("")) {
                 return new Response("Country must be not empty", Status.BAD_REQUEST);
             }
-
+            
             for (Passenger passenger : passengers) {
                 if (passenger.getId()== idLong){
                     newDataPassenger = passenger;

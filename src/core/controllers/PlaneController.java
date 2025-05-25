@@ -10,7 +10,6 @@ import core.models.Plane;
 import core.models.storage.PlaneStorage;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 /**
  *
@@ -24,6 +23,19 @@ public class PlaneController {
         try {
             Pattern idPattern = Pattern.compile("^[A-Z]{2}\\d{5}$");
             int maxCapInt;
+            
+            if (id.equals("")) {
+                return new Response("Id must be not empty", Status.BAD_REQUEST);
+            }
+            
+            if (brand.equals("")) {
+                return new Response("Brand must be not empty", Status.BAD_REQUEST);
+            }
+
+            if (model.equals("")) {
+                return new Response("Model must be not empty", Status.BAD_REQUEST);
+            }
+            
             if (!idPattern.matcher(id).matches()) {
                 return new Response("Id must be XXYYYYY (X corresponds to a capital letter and Y to a digit from 0 to 9).", Status.BAD_REQUEST);
             }
@@ -34,14 +46,6 @@ public class PlaneController {
                         return new Response("Id in use. Enter another id", Status.BAD_REQUEST);
                     }
                 }
-            }
-
-            if (brand.equals("")) {
-                return new Response("Brand must be not empty", Status.BAD_REQUEST);
-            }
-
-            if (model.equals("")) {
-                return new Response("Model must be not empty", Status.BAD_REQUEST);
             }
 
             try {
