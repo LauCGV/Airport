@@ -8,6 +8,8 @@ import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Flight;
 import core.models.Passenger;
+import core.models.add.AddFlight;
+import core.models.add.AddPassenger;
 import core.models.storage.FlightStorage;
 import core.models.storage.PassengerStorage;
 import java.util.ArrayList;
@@ -64,8 +66,8 @@ public class AddFlightToPassengerController {
                 return new Response("This flight already exist on this passenger", Status.BAD_REQUEST);
             }
 
-            flightSelected.getPassengers().add(passengerSelected);
-            passengerSelected.getFlights().add(flightSelected);
+            AddPassenger.addPassengerToList(flightSelected.getPassengers(), passengerSelected);
+            AddFlight.addFlightToList(passengerSelected.getFlights(), flightSelected);
 
             return new Response("Flight added successfully", Status.OK);
         } catch (Exception ex) {

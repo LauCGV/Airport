@@ -49,8 +49,8 @@ public class MyFlightsTableController {
             for (Flight flight : flights) {
                 model.addRow(new Object[]{
                     flight.getId(),
-                    flight.getDepartureLocation().getAirportId(),
-                    flight.getArrivalLocation().getAirportId(),});
+                    flight.getDepartureDate(),
+                    flight.calculateArrivalDate(),});
             }
             
             return new Response("Data successfully added", Status.OK, flights.clone());

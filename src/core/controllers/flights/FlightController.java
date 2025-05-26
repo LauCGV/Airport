@@ -9,6 +9,7 @@ import core.controllers.utils.Status;
 import core.models.Flight;
 import core.models.Location;
 import core.models.Plane;
+import core.models.add.AddFlight;
 import core.models.storage.FlightStorage;
 import core.models.storage.LocationStorage;
 import core.models.storage.PlaneStorage;
@@ -159,7 +160,7 @@ public class FlightController {
             }
 
             flights.add(flightTemp);
-            plane.getFlights().add(flightTemp);
+            AddFlight.addFlightToList(plane.getFlights(), flightTemp);
 
             return new Response("Flight created successfully", Status.CREATED);
 

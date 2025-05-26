@@ -37,7 +37,7 @@ public class FlightTableController {
                         flight.getDepartureDate(),
                         flight.calculateArrivalDate(),
                         flight.getPlane().getId(),
-                        flight.getNumPassengers(),});
+                        flight.getPassengers().size(),});
                 } else {
                     model.addRow(new Object[]{
                         flight.getId(),
@@ -47,7 +47,7 @@ public class FlightTableController {
                         flight.getDepartureDate(),
                         flight.calculateArrivalDate(),
                         flight.getPlane().getId(),
-                        flight.getNumPassengers(),});
+                        flight.getPassengers().size(),});
                 }
             }
             return new Response("Data successfully added", Status.OK, flights.clone());

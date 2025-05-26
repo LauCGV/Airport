@@ -55,8 +55,7 @@ public class Flight {
         this.minutesDurationScale = minutesDurationScale;       
 
     }
- 
-    
+   
     public String getId() {
         return id;
     }
@@ -101,7 +100,6 @@ public class Flight {
         return passengers;
     }
     
-
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
     }
@@ -113,19 +111,9 @@ public class Flight {
     public void setMinutesDurationArrival(int minutesDurationArrival) {
         this.minutesDurationArrival = minutesDurationArrival;
     }
-          
-    public int getNumPassengers() {
-        return passengers.size();
-    }
-   
+            
     public LocalDateTime calculateArrivalDate() {
         return departureDate.plusHours(hoursDurationScale).plusHours(hoursDurationArrival).plusMinutes(minutesDurationScale).plusMinutes(minutesDurationArrival);
     }
-
-    @Override
-    public String toString() {
-        return "Flight{" + "id=" + id + ", scaleLocation=" + scaleLocation + '}';
-    }
-    
     
 }

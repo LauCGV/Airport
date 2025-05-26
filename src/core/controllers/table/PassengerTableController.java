@@ -7,6 +7,8 @@ package core.controllers.table;
 import core.controllers.utils.Response;
 import core.controllers.utils.Status;
 import core.models.Passenger;
+import core.models.passengerUtils.FullName;
+import core.models.passengerUtils.FullPhone;
 import core.models.storage.PassengerStorage;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -26,16 +28,17 @@ public class PassengerTableController {
             }
 
             passengers.sort(Comparator.comparingLong(Passenger::getId));
-
+           
+            
             for (Passenger passenger : passengers) {
                 model.addRow(new Object[]{
                     passenger.getId(),
-                    passenger.getFirstname(),
+                    FullName.unitVariables(passenger.getFirstname(), passenger.getLastname()),
                     passenger.getBirthDate(),
                     passenger.calculateAge(),
-                    passenger.generateFullPhone(),
+                    FullPhone.unitVariables(String.valueOf(passenger.getCountryPhoneCode()), String.valueOf(passenger.getPhone())),
                     passenger.getCountry(),
-                    passenger.getNumFlights()
+                    passenger.getFlights().size()
                 });
             }
 
