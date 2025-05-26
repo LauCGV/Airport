@@ -31,7 +31,7 @@ public class MyFlightsTableController {
             try {
                 idLong = Long.parseLong(passengerId);
             } catch (NumberFormatException ex) {
-                return new Response("Choose a user id on administration", Status.BAD_REQUEST);
+                return new Response("Choose a user id on administration", Status.BAD_REQUEST, passengers.clone());
             }
 
             for (Passenger passenger : passengers) {

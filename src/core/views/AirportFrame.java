@@ -22,7 +22,6 @@ import core.controllers.table.MyFlightsTableController;
 import core.controllers.table.PassengerTableController;
 import core.controllers.table.PlaneTableController;
 import core.controllers.utils.addItemToComboBox.AddPassengerToComboBox;
-
 import core.controllers.utils.Response;
 import core.controllers.utils.addItemToComboBox.AddFlightToComboBox;
 import core.controllers.utils.addItemToComboBox.AddJsonToStorage;
@@ -154,6 +153,10 @@ public class AirportFrame extends javax.swing.JFrame {
         panelRound2 = new core.views.PanelRound();
         jButton13 = new javax.swing.JButton();
         pantalla = new javax.swing.JTabbedPane();
+        Administration = new javax.swing.JPanel();
+        userRB = new javax.swing.JRadioButton();
+        administratorRB = new javax.swing.JRadioButton();
+        userSelectComboBox = new javax.swing.JComboBox<>();
         passangerRegistration = new javax.swing.JPanel();
         countryLabel = new javax.swing.JLabel();
         idUserLabel = new javax.swing.JLabel();
@@ -284,10 +287,6 @@ public class AirportFrame extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         minutesDelayCB = new javax.swing.JComboBox<>();
         btnDelayFlight = new javax.swing.JButton();
-        Administration = new javax.swing.JPanel();
-        userRB = new javax.swing.JRadioButton();
-        administratorRB = new javax.swing.JRadioButton();
-        userSelectComboBox = new javax.swing.JComboBox<>();
         panelRound3 = new core.views.PanelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -337,6 +336,37 @@ public class AirportFrame extends javax.swing.JFrame {
         panelRound1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
 
         pantalla.setFont(new java.awt.Font("Yu Gothic UI", 0, 14)); // NOI18N
+
+        Administration.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        userRB.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        userRB.setText("User");
+        userRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userRBActionPerformed(evt);
+            }
+        });
+        Administration.add(userRB, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, -1, -1));
+
+        administratorRB.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        administratorRB.setText("Administrator");
+        administratorRB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                administratorRBActionPerformed(evt);
+            }
+        });
+        Administration.add(administratorRB, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 164, -1, -1));
+
+        userSelectComboBox.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        userSelectComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User" }));
+        userSelectComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userSelectComboBoxActionPerformed(evt);
+            }
+        });
+        Administration.add(userSelectComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 130, -1));
+
+        pantalla.addTab("Administration", Administration);
 
         passangerRegistration.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -435,7 +465,7 @@ public class AirportFrame extends javax.swing.JFrame {
         idAirplaneLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         idAirplaneLabel.setText("ID:");
         AirplaneRegistration.add(idAirplaneLabel);
-        idAirplaneLabel.setBounds(53, 96, 21, 25);
+        idAirplaneLabel.setBounds(53, 96, 22, 25);
 
         idAirplaneTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         AirplaneRegistration.add(idAirplaneTextField);
@@ -444,7 +474,7 @@ public class AirportFrame extends javax.swing.JFrame {
         brandAirplaneLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         brandAirplaneLabel.setText("Brand:");
         AirplaneRegistration.add(brandAirplaneLabel);
-        brandAirplaneLabel.setBounds(53, 157, 50, 25);
+        brandAirplaneLabel.setBounds(53, 157, 52, 25);
 
         brandTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         AirplaneRegistration.add(brandTextField);
@@ -457,7 +487,7 @@ public class AirportFrame extends javax.swing.JFrame {
         modelAirplaneLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         modelAirplaneLabel.setText("Model:");
         AirplaneRegistration.add(modelAirplaneLabel);
-        modelAirplaneLabel.setBounds(53, 216, 55, 25);
+        modelAirplaneLabel.setBounds(53, 216, 57, 25);
 
         maxCapAirplaneTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         AirplaneRegistration.add(maxCapAirplaneTextField);
@@ -466,7 +496,7 @@ public class AirportFrame extends javax.swing.JFrame {
         maxCapLabel.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         maxCapLabel.setText("Max Capacity:");
         AirplaneRegistration.add(maxCapLabel);
-        maxCapLabel.setBounds(53, 276, 110, 25);
+        maxCapLabel.setBounds(53, 276, 114, 25);
 
         airlineAirplaneTextField.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         AirplaneRegistration.add(airlineAirplaneTextField);
@@ -1399,37 +1429,6 @@ public class AirportFrame extends javax.swing.JFrame {
 
         pantalla.addTab("Delay flight", delayFlight);
 
-        Administration.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        userRB.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        userRB.setText("User");
-        userRB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userRBActionPerformed(evt);
-            }
-        });
-        Administration.add(userRB, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, -1, -1));
-
-        administratorRB.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        administratorRB.setText("Administrator");
-        administratorRB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                administratorRBActionPerformed(evt);
-            }
-        });
-        Administration.add(administratorRB, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 164, -1, -1));
-
-        userSelectComboBox.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
-        userSelectComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select User" }));
-        userSelectComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userSelectComboBoxActionPerformed(evt);
-            }
-        });
-        Administration.add(userSelectComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 130, -1));
-
-        pantalla.addTab("Administration", Administration);
-
         panelRound1.add(pantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 41, 1150, 620));
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
@@ -1656,7 +1655,7 @@ public class AirportFrame extends javax.swing.JFrame {
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);          
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
             nameUpdateTextField.setText("");
             lastNameUpdateTextField.setText("");
             yearUpdateTextField.setText("");
@@ -1705,9 +1704,9 @@ public class AirportFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDelayFlightActionPerformed
 
     private void btnRefrescarMyFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefrescarMyFlightsActionPerformed
-       String passengerId = userSelectComboBox.getItemAt(userSelectComboBox.getSelectedIndex());
+        String passengerId = userSelectComboBox.getItemAt(userSelectComboBox.getSelectedIndex());
 
-        Response response = MyFlightsTableController.updateFlightTable((DefaultTableModel) myFlightsTable.getModel(),passengerId);
+        Response response = MyFlightsTableController.updateFlightTable((DefaultTableModel) myFlightsTable.getModel(), passengerId);
         if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
         } else if (response.getStatus() >= 400) {
@@ -1715,12 +1714,18 @@ public class AirportFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-// Response response = FlightTableController.updateFlightTable((DefaultTableModel) flightTable.getModel()); 
     }//GEN-LAST:event_btnRefrescarMyFlightsActionPerformed
 
     private void btnRefreshPassengersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshPassengersActionPerformed
         Response response = PassengerTableController.updatePassengerTable((DefaultTableModel) passengerTable.getModel());
+        if (response.getStatus() >= 500) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
+        } else if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
+
+        }
     }//GEN-LAST:event_btnRefreshPassengersActionPerformed
 
     private void btnRefreshFlightsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshFlightsActionPerformed
@@ -1737,19 +1742,18 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void btnRefreshPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshPlanesActionPerformed
         Response response = PlaneTableController.updatePlaneTable((DefaultTableModel) planesTable.getModel());
-         if (response.getStatus() >= 500) {
+        if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Response Message", JOptionPane.INFORMATION_MESSAGE);
         }
-        
     }//GEN-LAST:event_btnRefreshPlanesActionPerformed
 
     private void btnRefreshLocationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshLocationsActionPerformed
         Response response = LocationTableController.updateLocationTable((DefaultTableModel) locationTable.getModel());
-         if (response.getStatus() >= 500) {
+        if (response.getStatus() >= 500) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.ERROR_MESSAGE);
         } else if (response.getStatus() >= 400) {
             JOptionPane.showMessageDialog(null, response.getMessage(), "Error " + response.getStatus(), JOptionPane.WARNING_MESSAGE);
