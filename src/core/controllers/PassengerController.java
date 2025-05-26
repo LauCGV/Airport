@@ -90,7 +90,7 @@ public class PassengerController {
             }
 
             try {
-                phoneLong = Long.parseLong(code);
+                phoneLong = Long.parseLong(phone);
                 if (phoneLong < 0 || phone.length() > 11) {
                     return new Response("Phone must be 0 to 11 digits long", Status.BAD_REQUEST);
                 }

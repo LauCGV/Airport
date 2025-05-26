@@ -23,7 +23,9 @@ public class LocationController {
         try {
             Pattern idPattern = Pattern.compile("^[A-Z]{3}$");
             Pattern latitudPattern = Pattern.compile("^\\d+(\\.\\d{0,4})?$");
+            Pattern latitudPattern2 = Pattern.compile("^-?\\d+(\\.\\d{0,4})?$");
             Pattern longitudPattern = Pattern.compile("^\\d+(\\.\\d{0,4})?$");
+            Pattern longitudPattern2 = Pattern.compile("^-?\\d+(\\.\\d{0,4})?$");
             double latitudDouble, longitudDouble;
             
             if (!idPattern.matcher(id).matches()) {
@@ -55,7 +57,7 @@ public class LocationController {
                 if (latitudDouble < -90 || latitudDouble > 90) {
                     return new Response("Latitud must be greater than -90 and lees than 90", Status.BAD_REQUEST);
                 }
-                if ((!latitudPattern.matcher(latitude).matches()) ) {
+                if (!latitudPattern.matcher(latitude).matches() && !latitudPattern2.matcher(latitude).matches()) {
                     return new Response("Latitude must be less than 5 decimal places.", Status.BAD_REQUEST);
                 }
             } catch (NumberFormatException ex) {
@@ -67,7 +69,7 @@ public class LocationController {
                 if (latitudDouble < -180 || latitudDouble > 180) {
                     return new Response("Longitud must be greater than -180 and lees than 180", Status.BAD_REQUEST);
                 }
-                if ((!longitudPattern.matcher(longitud).matches()) ) {
+                if ((!longitudPattern.matcher(longitud).matches()) && !longitudPattern2.matcher(longitud).matches()) {
                     return new Response("Longitud must be less than 5 decimal places.", Status.BAD_REQUEST);
                 }
             } catch (NumberFormatException ex) {

@@ -42,7 +42,7 @@ public class PlaneController {
 
             if (planes != null) {
                 for (Plane plane : planes) {
-                    if (plane.getId() == id) {
+                    if (plane.getId().equals(id)) {
                         return new Response("Id in use. Enter another id", Status.BAD_REQUEST);
                     }
                 }

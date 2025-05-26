@@ -1528,7 +1528,6 @@ public class AirportFrame extends javax.swing.JFrame {
             phoneTextField.setText("");
             countryTextField.setText("");
             AddPassengerToComboBox.addItems(this.userSelectComboBox);
-
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
